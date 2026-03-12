@@ -18,16 +18,22 @@
       text-align: center;
     }
     .emoji { font-size: 48px; margin-bottom: 16px; }
-    .number { font-size: 120px; font-weight: 800; line-height: 1; color: #FF6B35; }
-    .label { font-size: 18px; color: #888; margin-top: 12px; letter-spacing: 1px; text-transform: uppercase; }
-    .updated { font-size: 12px; color: #444; margin-top: 24px; }
+    .number { font-size: 220px; font-weight: 800; line-height: 1; color: #FF6B35; }
+    .label { font-size: 22px; color: #888; margin-top: 16px; letter-spacing: 2px; text-transform: uppercase; }
+    .updated { font-size: 13px; color: #444; margin-top: 20px; }
+    .logo { margin-top: 60px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .logo img { width: 72px; height: 72px; border-radius: 18px; }
+    .logo-name { font-size: 20px; font-weight: 700; color: #555; letter-spacing: 1px; }
   </style>
 </head>
 <body>
-  <div class="emoji">🐾</div>
   <div class="number" id="count">—</div>
-  <div class="label">WoofMeet Users</div>
+  <div class="label">Users</div>
   <div class="updated" id="updated"></div>
+  <div class="logo">
+    <img src="icon.png" alt="WoofMeet">
+    <div class="logo-name">WoofMeet</div>
+  </div>
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
