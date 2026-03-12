@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoofMeet Users</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .emoji { font-size: 48px; margin-bottom: 16px; }
+    .number { font-size: 120px; font-weight: 800; line-height: 1; color: #FF6B35; }
+    .label { font-size: 18px; color: #888; margin-top: 12px; letter-spacing: 1px; text-transform: uppercase; }
+    .updated { font-size: 12px; color: #444; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="emoji">🐾</div>
+  <div class="number" id="count">—</div>
+  <div class="label">WoofMeet Users</div>
+  <div class="updated" id="updated"></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+    const app = initializeApp({
+      apiKey: "AIzaSyBTiGo2n9laBh4JzWGYCrjMLZ8KhqUJoWU",
+      authDomain: "pawmates-be0e1.firebaseapp.com",
+      projectId: "pawmates-be0e1",
+    });
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    await signInAnonymously(auth);
+
+    onSnapshot(doc(db, 'stats', 'public'), (snap) => {
+      const data = snap.data();
+      document.getElementById('count').textContent = data?.userCount ?? '—';
+      document.getElementById('updated').textContent = 'Updated just now';
+    });
+  </script>
+</body>
+</html>
