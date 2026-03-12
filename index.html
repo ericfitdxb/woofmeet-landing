@@ -302,10 +302,14 @@
 
   <!-- Fade-in on scroll -->
   <script>
+    // Make hero elements visible immediately
+    document.querySelectorAll('.hero .fade-in').forEach(el => el.classList.add('visible'));
+
+    // Observe the rest
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
