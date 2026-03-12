@@ -32,7 +32,6 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getFirestore, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
     const app = initializeApp({
       apiKey: "AIzaSyBTiGo2n9laBh4JzWGYCrjMLZ8KhqUJoWU",
@@ -40,15 +39,16 @@
       projectId: "pawmates-be0e1",
     });
 
-    const auth = getAuth(app);
     const db = getFirestore(app);
-
-    await signInAnonymously(auth);
 
     onSnapshot(doc(db, 'stats', 'public'), (snap) => {
       const data = snap.data();
-      document.getElementById('count').textContent = data?.userCount ?? '—';
-      document.getElementById('updated').textContent = 'Updated just now';
+      const el = document.getElementById('count');
+      el.textContent = data?.userCount ?? '?';
+      document.getElementById('updated').textContent = 'Live · updated just now';
+    }, (err) => {
+      document.getElementById('count').textContent = '?';
+      document.getElementById('updated').textContent = 'Could not load — ' + err.message;
     });
   </script>
 </body>
