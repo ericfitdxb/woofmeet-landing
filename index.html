@@ -255,61 +255,18 @@
     <div class="footer-copy">© 2026 WoofMeet. Made with ❤️ for dogs everywhere.</div>
   </footer>
 
-  <!-- Firebase (for live user count) -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCFMKNM09F1kxVPnRlT0z6FNiwUHEfaPkY",
-      authDomain: "pawmates-be0e1.firebaseapp.com",
-      projectId: "pawmates-be0e1",
-      storageBucket: "pawmates-be0e1.firebasestorage.app",
-      messagingSenderId: "931691126043",
-      appId: "1:931691126043:web:0b6db3ef65a0612447c7be",
-    };
-
-    try {
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-      const statsDoc = await getDoc(doc(db, 'starts', 'public'));
-      if (statsDoc.exists()) {
-        const count = statsDoc.data().userCount || 0;
-        animateCounter(count);
-      } else {
-        document.getElementById('user-count').textContent = '500+';
-      }
-    } catch {
-      document.getElementById('user-count').textContent = '500+';
-    }
-
-    function animateCounter(target) {
-      const el = document.getElementById('user-count');
-      const duration = 2000;
-      const start = performance.now();
-      const from = Math.max(0, target - 100);
-      const step = (now) => {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(from + (target - from) * ease);
-        el.textContent = current.toLocaleString() + '+';
-        if (progress < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    }
-  </script>
-
-  <!-- Fade-in on scroll -->
   <script>
-    // Make hero elements visible immediately
-    document.querySelectorAll('.hero .anim').forEach(el => el.classList.add('visible'));
-
-    // Observe the rest
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.anim:not(.visible)').forEach(el => observer.observe(el));
+    const el = document.getElementById('user-count');
+    const target = 8;
+    const duration = 1500;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * ease) + '+';
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   </script>
 </body>
 </html>
