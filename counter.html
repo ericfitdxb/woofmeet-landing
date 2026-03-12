@@ -41,7 +41,7 @@
 
     const db = getFirestore(app);
 
-    onSnapshot(doc(db, 'stat', 'public'), (snap) => {
+    onSnapshot(doc(db, 'starts', 'public'), (snap) => {
       const data = snap.data();
       const el = document.getElementById('count');
       el.textContent = data?.userCount ?? '?';
